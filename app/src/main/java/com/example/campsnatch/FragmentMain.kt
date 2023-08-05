@@ -34,6 +34,9 @@ class FragmentMain : Fragment() {
         binding?.plusIcon?.setOnClickListener {
             activity.replaceFragment(FragmentSearchCampground(), R.id.frag_container)
         }
+        binding?.tentIcon?.setOnClickListener {
+            activity.replaceFragment(FragmentAccountManagement(), R.id.frag_container)
+        }
 
         // Request FCM token
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->

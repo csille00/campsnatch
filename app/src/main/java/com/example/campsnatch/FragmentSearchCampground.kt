@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.campsnatch.databinding.FragSearchCampgroundBinding
 import com.example.campsnatch.model.Campground
@@ -17,9 +19,8 @@ class FragmentSearchCampground : Fragment() {
     private val binding: FragSearchCampgroundBinding? by viewBinding(FragSearchCampgroundBinding::bind)
     private var cont: Context? = null
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CampgroundsAdapter
-    private var campgrounds: List<Campground> = listOf()
+    private var campgrounds: MutableList<Campground> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,16 +35,47 @@ class FragmentSearchCampground : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = binding!!.recyclerView
+        // Initialize the adapter with an empty list
+        adapter = CampgroundsAdapter(campgrounds)
+        binding?.recyclerView?.layoutManager = LinearLayoutManager(context) // Set the LayoutManager
+        binding?.recyclerView?.adapter = adapter
 
         val serverProxy = ServerProxy()
-        val adapter: CampgroundsAdapter
-        serverProxy.getCampgrounds { response ->
-        }
 
+        serverProxy.getCampgrounds { response ->
+            campgrounds =
+                response?.campgrounds?.sortedBy { it.campgroundName } as MutableList<Campground> // Update the outer campgrounds variable
+            adapter.submitList(campgrounds) // Submit the list to the adapter
+
+            binding?.searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false // You can handle the submit action here if needed
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    filterCampgrounds(newText.orEmpty())
+                    return true
+                }
+            })
+        }
     }
 
-    inner class CampgroundsAdapter(private val campgrounds: List<Campground>) : RecyclerView.Adapter<CampgroundsAdapter.CampgroundViewHolder>() {
+
+
+    private fun filterCampgrounds(query: String) {
+        val filteredList = campgrounds.filter {
+            it.campgroundName.contains(query, ignoreCase = true)
+        }
+        adapter.submitList(filteredList)
+    }
+
+    inner class CampgroundsAdapter(private val campgrounds: MutableList<Campground>) : RecyclerView.Adapter<CampgroundsAdapter.CampgroundViewHolder>() {
+
+        fun submitList(newCampgrounds: List<Campground>) {
+            campgrounds.clear()
+            campgrounds.addAll(newCampgrounds)
+            notifyDataSetChanged() // Notify the RecyclerView that the data has changed
+        }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CampgroundViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_campground, parent, false)

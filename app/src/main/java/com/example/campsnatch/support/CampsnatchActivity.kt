@@ -27,7 +27,6 @@ open class CampsnatchActivity: AppCompatActivity() {
         findViewById(android.R.id.content) as? ContentFrameLayout
     }
 
-
     protected inline fun <T : ViewBinding> viewBinding(crossinline bindingInflater: (LayoutInflater) -> T) = lazy(LazyThreadSafetyMode.NONE) { bindingInflater.invoke(layoutInflater) }
 
     override fun startActivity(intent: Intent) {
@@ -44,8 +43,11 @@ open class CampsnatchActivity: AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(fragManagerId, fragment)
+        transaction.addToBackStack(null) // This line adds the transaction to the back stack
         transaction.commit()
     }
+
+
 
     private fun Int.toDp() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), resources.displayMetrics).toInt()
 
