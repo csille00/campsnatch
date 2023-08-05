@@ -1,3 +1,5 @@
+import com.example.campsnatch.model.CampgroundAvailabilitiesResponse
+import com.example.campsnatch.model.CampgroundAvailabilityRequest
 import com.example.campsnatch.model.CampgroundResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -32,6 +34,24 @@ class ServerProxy {
             }
         })
     }
+
+
+    fun getCampgroundAvailabilities(request: CampgroundAvailabilityRequest, callback: (CampgroundAvailabilitiesResponse?) -> Unit) {
+        val call = service.getCampgroundAvailabilities(request)
+        call.enqueue(object : retrofit2.Callback<CampgroundAvailabilitiesResponse> {
+            override fun onResponse(
+                call: retrofit2.Call<CampgroundAvailabilitiesResponse>,
+                response: retrofit2.Response<CampgroundAvailabilitiesResponse>
+            ) {
+                callback(response.body())
+            }
+
+            override fun onFailure(call: retrofit2.Call<CampgroundAvailabilitiesResponse>, t: Throwable) {
+                callback(null)
+            }
+        })
+    }
+
 
     // Add more methods for other endpoints here
 }

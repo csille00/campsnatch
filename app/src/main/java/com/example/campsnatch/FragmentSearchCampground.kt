@@ -2,6 +2,7 @@ package com.example.campsnatch
 
 import ServerProxy
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -94,6 +95,9 @@ class FragmentSearchCampground : Fragment() {
 
             fun bind(campground: Campground) {
                 tvCampgroundName.text = campground.campgroundName
+                tvCampgroundName.setOnClickListener{
+                    val intent = Intent(activity, BookingActivity::class.java)
+                    startActivity(intent)                }
                 // Bind other views here
             }
         }
