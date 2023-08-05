@@ -40,6 +40,13 @@ open class CampsnatchActivity: AppCompatActivity() {
         }
     }
 
+    fun replaceFragment(fragment: Fragment, fragManagerId: Int){
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(fragManagerId, fragment)
+        transaction.commit()
+    }
+
     private fun Int.toDp() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), resources.displayMetrics).toInt()
 
     private val progressBar by lazy {
