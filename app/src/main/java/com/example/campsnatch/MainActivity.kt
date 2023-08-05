@@ -1,7 +1,6 @@
 package com.example.campsnatch
 
 import android.os.Bundle
-import android.widget.Toolbar
 import com.example.campsnatch.databinding.ActivityMainBinding
 import com.example.campsnatch.support.CampsnatchActivity
 
@@ -21,6 +20,4 @@ class MainActivity : CampsnatchActivity() {
             replaceFragment(FragmentMain(), binding.fragContainer.id)
         }
     }
-
-
 }
