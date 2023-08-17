@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:Tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    android:background="@drawable/wilderness">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Large Bold Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            Tools:text="Large Bold Title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Small Underlined Text -->
+        <TextView
+            android:id="@+id/tvDetailsLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Details at recreation.gov"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+        <!-- Background for Availability Section -->
+        <View
+            android:id="@+id/backgroundAvailability"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="#B3FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetailsLink"
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerView" />
+
+        <!-- Title "Availability" -->
+        <TextView
+            android:id="@+id/tvAvailability"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Availabilities"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/backgroundAvailability"
+            app:layout_constraintEnd_toEndOf="@+id/backgroundAvailability"
+            app:layout_constraintTop_toTopOf="@+id/backgroundAvailability" />
+
+        <!-- Horizontal RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAvailability" />
+
+        <!-- Background for Trip Start Date Section -->
+        <View
+            android:id="@+id/backgroundStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="#B3FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backgroundAvailability"
+            app:layout_constraintBottom_toBottomOf="@+id/calendarView" />
+
+        <!-- Left Aligned Title "Trip Start Date" -->
+        <TextView
+            android:id="@+id/tvStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trip Start Date"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/backgroundStartDate"
+            app:layout_constraintTop_toTopOf="@+id/backgroundStartDate" />
+
+        <!-- Calendar View -->
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:outlineAmbientShadowColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/tvStartDate" />
+
+        <!-- Input Box for Integer Selection -->
+        <EditText
+            android:id="@+id/integerInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:inputType="number"
+            android:hint="Enter an integer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backgroundStartDate" />
+
+        <!-- Track Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTrack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/campsnatch_brown"
+            android:textColor="@color/white"
+            android:text="Track"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/integerInput" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
